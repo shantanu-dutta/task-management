@@ -18,6 +18,7 @@
           <label for="password">Password</label>
           <input type="password" name="password" id="password">
         </div>
+        ${errorMessage}
         <div>
           <button type="submit">Submit</button>
         </div>

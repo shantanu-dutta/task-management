@@ -12,13 +12,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/login")
 public class LoginController {
 
+  private final AuthenticationService authService;
+
+  public LoginController(AuthenticationService authService) {
+    this.authService = authService;
+  }
+
   @GetMapping()
   public String index() {
     return "login";
   }
 
   @PostMapping()
-  public String login(@RequestParam String name, ModelMap model) {
+  public String login(@RequestParam String name, @RequestParam String password, ModelMap model) {
+    // authentication
+    if(!authService.authenticate(name, password)) {
+      model.put("errorMessage", "Invalid username or password");
+      return "login";
+    }
+
     model.put("name", name);
     return "home";
   }
