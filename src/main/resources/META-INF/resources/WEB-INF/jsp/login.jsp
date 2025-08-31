@@ -8,7 +8,7 @@
   <body>
     <main>
       <h1>Login</h1>
-      <p>Welcome to the login page, ${name}!</p>
+      <p>Welcome to the login page!</p>
     </main>
   </body>
 </html>
