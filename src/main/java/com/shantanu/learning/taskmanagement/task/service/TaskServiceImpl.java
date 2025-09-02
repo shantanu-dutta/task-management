@@ -59,4 +59,9 @@ public class TaskServiceImpl implements TaskService {
         false);
     tasks.add(newTask);
   }
+
+  @Override
+  public void deleteById(int taskId) {
+    tasks.removeIf(task -> task.getId() == taskId);
+  }
 }

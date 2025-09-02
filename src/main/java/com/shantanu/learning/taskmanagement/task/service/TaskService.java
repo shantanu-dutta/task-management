@@ -6,7 +6,9 @@ import com.shantanu.learning.taskmanagement.task.entity.Task;
 import com.shantanu.learning.taskmanagement.task.model.NewTaskRequest;
 
 public interface TaskService {
-  public List<Task> findByUsername(String username);
+  List<Task> findByUsername(String username);
 
-  public void save(String username, NewTaskRequest newTask);
+  void save(String username, NewTaskRequest newTask);
+
+  void deleteById(int taskId);
 }

@@ -7,6 +7,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -33,7 +34,7 @@ public class TaskController {
     String username = (String) model.get("name");
     ;
     model.put("tasks", taskService.findByUsername(username));
-    return "tasks/index";
+    return "/tasks/index";
   }
 
   @GetMapping("create")
@@ -47,7 +48,7 @@ public class TaskController {
       model.addAttribute("newTaskRequest", newTaskRequest);
     }
 
-    return "tasks/create";
+    return "/tasks/create";
   }
 
   @PostMapping()
@@ -68,4 +69,10 @@ public class TaskController {
     return "redirect:/tasks";
   }
 
+  @GetMapping("delete/{id}")
+  public String deleteTask(@PathVariable("id") int taskId, ModelMap model) {
+    taskService.deleteById(taskId);
+
+    return "redirect:/tasks";
+  }
 }
