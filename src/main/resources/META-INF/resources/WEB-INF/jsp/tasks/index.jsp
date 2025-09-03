@@ -26,8 +26,13 @@
                 <h5
                   class="card-title d-flex justify-content-between align-items-center"
                 >
-                  ${task.title}
-                  <div>
+                  <span>
+                    ${task.title}
+                    <c:if test="${task.done}">
+                      <span class="badge text-bg-success">Completed</span>
+                    </c:if>
+                  </span>
+                  <div class="d-flex align-items-center">
                     <div class="actions">
                       <a
                         href="/tasks/edit/${task.id}"
@@ -151,7 +156,7 @@
             confirmDeleteButton.addEventListener("click", handleConfirmClick);
 
             // Define the click handler for the cancel button
-            handleCancelClick = function() {
+            handleCancelClick = function () {
               if (!confirmDeleteButton) return;
               // Remove the event listener from the confirm button when cancel is clicked
               confirmDeleteButton.removeEventListener(
@@ -159,7 +164,7 @@
                 handleConfirmClick
               );
               console.debug("Event listener for confirm button removed.");
-            }
+            };
 
             // Attach the event listener to the cancel button
             cancelDeleteButton.addEventListener("click", handleCancelClick);
@@ -170,7 +175,7 @@
             "hidden.bs.modal",
             function () {
               console.debug("Task delete confirm modal hidden.");
-              
+
               // Ensure event listeners are removed if the modal is closed by other means (e.g., escape key, backdrop click)
               // This is a safety measure to prevent multiple listeners if the modal is opened and closed repeatedly without clicking cancel.
               const clonedConfirmButton = confirmDeleteButton.cloneNode(true);
@@ -183,8 +188,11 @@
                 "deleteTaskModalConfirmButton"
               );
               console.debug("Task delete confirm modal close button cloned.");
-              
-              cancelDeleteButton.removeEventListener("click", handleCancelClick);
+
+              cancelDeleteButton.removeEventListener(
+                "click",
+                handleCancelClick
+              );
               console.debug("Eent listener for close button removed.");
             }
           );

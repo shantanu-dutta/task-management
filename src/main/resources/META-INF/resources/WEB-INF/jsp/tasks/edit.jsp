@@ -6,7 +6,7 @@ uri="http://www.springframework.org/tags/form" prefix="form" %>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create New Task - Task Management</title>
+    <title>Edit task ${task.title} - Task Management</title>
     <link
       rel="stylesheet"
       href="/webjars/bootstrap/5.3.8/css/bootstrap.min.css"
@@ -14,12 +14,16 @@ uri="http://www.springframework.org/tags/form" prefix="form" %>
   </head>
   <body>
     <main class="container mt-4">
-      <h1>Create task</h1>
-      <p>Please fill-up the following form and submit to create a new task.</p>
+      <h1>Edit task <em>${task.title}</em></h1>
+      <p>
+        Please update the task values in the following form and submit to update
+        the task
+        <em>${task.title}</em>.
+      </p>
       <form:form
-        action="/tasks"
+        action="/tasks/edit/${task.id}"
         method="post"
-        modelAttribute="newTaskRequest"
+        modelAttribute="task"
         novalidate="true"
       >
         <div class="mb-3">
@@ -52,8 +56,17 @@ uri="http://www.springframework.org/tags/form" prefix="form" %>
           />
           <form:errors path="targetDate" cssClass="text-danger" />
         </div>
+        <div class="mb-3 form-check">
+          <form:checkbox
+            class="form-check-input"
+            id="task-completed"
+            path="done"
+          />
+          <label for="task-completed" class="form-check-label">Task completed</label>
+          <form:errors path="done" cssClass="text-danger" />
+        </div>
         <div>
-          <button type="submit" class="btn btn-success mr-2">Create</button>
+          <button type="submit" class="btn btn-success mr-2">Update</button>
           <a href="/tasks" class="btn">Cancel</a>
         </div>
       </form:form>

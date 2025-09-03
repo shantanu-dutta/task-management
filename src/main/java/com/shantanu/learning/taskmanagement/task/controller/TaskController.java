@@ -1,6 +1,7 @@
 package com.shantanu.learning.taskmanagement.task.controller;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -11,8 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.shantanu.learning.taskmanagement.task.entity.Task;
 import com.shantanu.learning.taskmanagement.task.model.NewTaskRequest;
 import com.shantanu.learning.taskmanagement.task.service.TaskService;
 
@@ -55,12 +56,8 @@ public class TaskController {
   public String addTask(
       @Valid @ModelAttribute NewTaskRequest newTaskRequest,
       BindingResult result,
-      RedirectAttributes redirectAttributes,
       ModelMap model) {
     if (result.hasErrors()) {
-      redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.newTaskRequest", result);
-      redirectAttributes.addFlashAttribute("newTaskRequest", newTaskRequest);
-      redirectAttributes.addFlashAttribute("hasError", true);
       return "redirect:/tasks/create";
     }
     String username = (String) model.get("name");
@@ -70,9 +67,38 @@ public class TaskController {
   }
 
   @GetMapping("delete/{id}")
-  public String deleteTask(@PathVariable("id") int taskId, ModelMap model) {
+  public String deleteTask(@PathVariable("id") int taskId) {
     taskService.deleteById(taskId);
 
     return "redirect:/tasks";
+  }
+
+  @GetMapping("edit/{id}")
+  public String showEditTaskPage(@PathVariable("id") int taskId, ModelMap model) {
+    Optional<Task> taskOpt = taskService.findById(taskId);
+
+    if (!taskOpt.isPresent()) {
+      return "redirect:/tasks";
+    }
+
+    Task task = taskOpt.get();
+
+    model.addAttribute("task", task);
+
+    return "/tasks/edit";
+  }
+
+  @PostMapping("edit/{id}")
+  public String updateTask(@PathVariable("id") int taskId, @Valid @ModelAttribute Task task,
+      BindingResult result,
+      ModelMap model) {
+    if (result.hasErrors()) {
+      return "redirect:/tasks/edit/" + taskId;
+    }
+
+    taskService.updateById(taskId, task);
+
+    return "redirect:/tasks";
+
   }
 }

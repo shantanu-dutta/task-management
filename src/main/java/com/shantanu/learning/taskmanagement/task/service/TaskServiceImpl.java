@@ -3,6 +3,8 @@ package com.shantanu.learning.taskmanagement.task.service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -48,6 +50,13 @@ public class TaskServiceImpl implements TaskService {
   }
 
   @Override
+  public Optional<Task> findById(int taskId) {
+    return tasks.stream()
+        .filter(task -> task.getId() == taskId)
+        .findFirst();
+  }
+
+  @Override
   public void save(String username, NewTaskRequest newTaskRequest) {
     int newTaskId = tasks.size() + 1;
     Task newTask = new Task(
@@ -63,5 +72,19 @@ public class TaskServiceImpl implements TaskService {
   @Override
   public void deleteById(int taskId) {
     tasks.removeIf(task -> task.getId() == taskId);
+  }
+
+  @Override
+  public void updateById(int taskId, Task updatedTask) {
+    tasks.forEach(task -> {
+      if (task.getId() != taskId) {
+        return;
+      }
+      
+      task.setTitle(updatedTask.getTitle());
+      task.setDescription((updatedTask.getDescription()));
+      task.setTargetDate(updatedTask.getTargetDate());
+      task.setDone(updatedTask.isDone());
+    });
   }
 }

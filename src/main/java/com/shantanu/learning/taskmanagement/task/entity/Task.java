@@ -2,11 +2,18 @@ package com.shantanu.learning.taskmanagement.task.entity;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.Size;
+
 public class Task {
   private int id;
   private String username;
+
+  @Size(min=10, message = "Enter atleast 10 characters.")
   private String title;
+  
+  @Size(max=100, message = "Maximum 100 characters are allowed.")
   private String description;
+
   private LocalDate targetDate;
   private boolean done;
 
