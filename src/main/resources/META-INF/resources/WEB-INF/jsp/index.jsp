@@ -16,5 +16,6 @@
       <p>Welcome to the home page, ${name}!</p>
       <p><a href="/tasks">Manage</a> your tasks.</p>
     </main>
+    <script src="/webjars/bootstrap/5.3.8/js/bootstrap.min.js"></script>
   </body>
 </html>
