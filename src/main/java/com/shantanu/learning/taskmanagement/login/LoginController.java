@@ -6,10 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 
 @Controller
 @RequestMapping("/login")
+@SessionAttributes("name")
 public class LoginController {
 
   private final AuthenticationService authService;
@@ -32,6 +34,6 @@ public class LoginController {
     }
 
     model.put("name", name);
-    return "home";
+    return "redirect:/tasks";
   }
 }

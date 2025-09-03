@@ -4,23 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Task Management</title>
+    <link
+      rel="stylesheet"
+      href="/webjars/bootstrap/5.3.8/css/bootstrap.min.css"
+    />
   </head>
   <body>
-    <main>
+    <%@ include file="./common/navigation.jspf" %>
+    <main class="container mt-4">
       <h1>Login</h1>
       <p>Welcome to the login page!</p>
       <form action="/login" method="post">
-        <div>
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" name="name" />
         </div>
-        <div>
-          <label for="password">Password</label>
-          <input type="password" name="password" id="password">
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            id="password"
+          />
         </div>
         ${errorMessage}
         <div>
-          <button type="submit">Submit</button>
+          <button type="submit" class="btn btn-primary">Login</button>
         </div>
       </form>
     </main>
