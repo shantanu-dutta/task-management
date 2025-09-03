@@ -12,6 +12,7 @@
     />
   </head>
   <body>
+    <%@ include file="../common/navigation.jspf" %>
     <main class="container mt-4">
       <h1 class="d-flex justify-content-between align-items-center">
         Tasks

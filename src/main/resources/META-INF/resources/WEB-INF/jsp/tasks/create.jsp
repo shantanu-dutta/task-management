@@ -13,6 +13,7 @@ uri="http://www.springframework.org/tags/form" prefix="form" %>
     />
   </head>
   <body>
+    <%@ include file="../common/navigation.jspf" %>
     <main class="container mt-4">
       <h1>Create task</h1>
       <p>Please fill-up the following form and submit to create a new task.</p>

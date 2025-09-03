@@ -10,6 +10,7 @@
     />
   </head>
   <body>
+    <%@ include file="./common/navigation.jspf" %>
     <main class="container mt-4">
       <h1>Login</h1>
       <p>Welcome to the login page!</p>
