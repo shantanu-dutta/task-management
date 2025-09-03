@@ -35,7 +35,7 @@ public class TaskController {
     String username = (String) model.get("name");
     ;
     model.put("tasks", taskService.findByUsername(username));
-    return "/tasks/index";
+    return "tasks/index";
   }
 
   @GetMapping("create")
@@ -49,7 +49,7 @@ public class TaskController {
       model.addAttribute("newTaskRequest", newTaskRequest);
     }
 
-    return "/tasks/create";
+    return "tasks/create";
   }
 
   @PostMapping()
@@ -85,7 +85,7 @@ public class TaskController {
 
     model.addAttribute("task", task);
 
-    return "/tasks/edit";
+    return "tasks/edit";
   }
 
   @PostMapping("edit/{id}")

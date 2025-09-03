@@ -14,6 +14,6 @@ public class HomeController {
   @GetMapping()
   public String goToHomePage(ModelMap model) {
     model.put("name", "admin");
-    return "/index";
+    return "index";
   }
 }
