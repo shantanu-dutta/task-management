@@ -58,6 +58,7 @@ uri="http://www.springframework.org/tags/form" prefix="form" %>
           <a href="/tasks" class="btn">Cancel</a>
         </div>
       </form:form>
+      <script src="/webjars/bootstrap/5.3.8/js/bootstrap.min.js"></script>
     </main>
   </body>
 </html>

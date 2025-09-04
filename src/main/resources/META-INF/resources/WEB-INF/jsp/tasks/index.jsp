@@ -109,7 +109,7 @@
         </div>
       </div>
     </main>
-    <script src="/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js"></script>
+    <script src="/webjars/bootstrap/5.3.8/js/bootstrap.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const deleteTaskConfirmModal = document.getElementById(

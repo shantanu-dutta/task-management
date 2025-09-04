@@ -63,7 +63,9 @@ uri="http://www.springframework.org/tags/form" prefix="form" %>
             id="task-completed"
             path="done"
           />
-          <label for="task-completed" class="form-check-label">Task completed</label>
+          <label for="task-completed" class="form-check-label"
+            >Task completed</label
+          >
           <form:errors path="done" cssClass="text-danger" />
         </div>
         <div>
@@ -71,6 +73,7 @@ uri="http://www.springframework.org/tags/form" prefix="form" %>
           <a href="/tasks" class="btn">Cancel</a>
         </div>
       </form:form>
+      <script src="/webjars/bootstrap/5.3.8/js/bootstrap.min.js"></script>
     </main>
   </body>
 </html>

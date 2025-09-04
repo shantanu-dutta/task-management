@@ -3,6 +3,8 @@ package com.shantanu.learning.taskmanagement.task.controller;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.shantanu.learning.taskmanagement.task.entity.Task;
 import com.shantanu.learning.taskmanagement.task.model.NewTaskRequest;
@@ -21,7 +22,6 @@ import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/tasks")
-@SessionAttributes("name")
 public class TaskController {
 
   private final TaskService taskService;
@@ -32,10 +32,10 @@ public class TaskController {
 
   @GetMapping()
   public String index(ModelMap model) {
-    String username = (String) model.get("name");
+    String username = getLoggedinUsername();
     ;
     model.put("tasks", taskService.findByUsername(username));
-    return "/tasks/index";
+    return "tasks/index";
   }
 
   @GetMapping("create")
@@ -49,7 +49,7 @@ public class TaskController {
       model.addAttribute("newTaskRequest", newTaskRequest);
     }
 
-    return "/tasks/create";
+    return "tasks/create";
   }
 
   @PostMapping()
@@ -60,7 +60,7 @@ public class TaskController {
     if (result.hasErrors()) {
       return "redirect:/tasks/create";
     }
-    String username = (String) model.get("name");
+    String username = getLoggedinUsername();
     taskService.save(username, newTaskRequest);
 
     return "redirect:/tasks";
@@ -85,7 +85,7 @@ public class TaskController {
 
     model.addAttribute("task", task);
 
-    return "/tasks/edit";
+    return "tasks/edit";
   }
 
   @PostMapping("edit/{id}")
@@ -99,6 +99,10 @@ public class TaskController {
     taskService.updateById(taskId, task);
 
     return "redirect:/tasks";
+  }
 
+  private String getLoggedinUsername() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    return authentication.getName();
   }
 }
