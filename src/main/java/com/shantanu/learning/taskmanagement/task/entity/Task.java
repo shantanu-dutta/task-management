@@ -2,16 +2,22 @@ package com.shantanu.learning.taskmanagement.task.entity;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;
 
+@Entity
 public class Task {
+  @Id
+  @GeneratedValue
   private int id;
   private String username;
 
-  @Size(min=10, message = "Enter atleast 10 characters.")
+  @Size(min = 10, message = "Enter atleast 10 characters.")
   private String title;
-  
-  @Size(max=100, message = "Maximum 100 characters are allowed.")
+
+  @Size(max = 300, message = "Maximum 300 characters are allowed.")
   private String description;
 
   private LocalDate targetDate;
