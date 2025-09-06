@@ -1,0 +1,5 @@
+DROP SEQUENCE IF EXISTS task_id_sequence;
+
+CREATE SEQUENCE task_id_sequence START
+WITH
+  1001 INCREMENT BY 1;

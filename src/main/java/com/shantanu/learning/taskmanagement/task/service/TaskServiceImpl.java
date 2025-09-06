@@ -1,90 +1,65 @@
 package com.shantanu.learning.taskmanagement.task.service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.shantanu.learning.taskmanagement.task.entity.Task;
 import com.shantanu.learning.taskmanagement.task.model.NewTaskRequest;
+import com.shantanu.learning.taskmanagement.task.repository.TaskRepository;
 
 @Service
 public class TaskServiceImpl implements TaskService {
-  private final List<Task> tasks;
+  private final TaskRepository taskRepository;
 
-  public TaskServiceImpl() {
-    tasks = new ArrayList<>();
-    tasks.add(
-        new Task(
-            1,
-            "admin",
-            "Learn Spring Boot 3", "Learn Spring Boot 3 related concepts, development patterns and best practices.",
-            LocalDate.now().plusDays(20),
-            false));
-    tasks.add(
-        new Task(
-            2,
-            "admin",
-            "Learn Docker", "Learn docker related concepts and commands.",
-            LocalDate.now().plusMonths(1),
-            false));
-    tasks.add(
-        new Task(
-            3,
-            "admin",
-            "Learn Kubernetes",
-            "Learn kubernetes related concepts and commands.",
-            LocalDate.now().plusMonths(2),
-            false));
+  public TaskServiceImpl(TaskRepository taskRepository) {
+    this.taskRepository = taskRepository;
   }
 
   @Override
   public List<Task> findByUsername(String username) {
-    return tasks.stream()
-        .filter(task -> task.getUsername().equals(username))
-        .collect(Collectors.toList());
+    return taskRepository.findByUsername(username);
   }
 
   @Override
   public Optional<Task> findById(int taskId) {
-    return tasks.stream()
-        .filter(task -> task.getId() == taskId)
-        .findFirst();
+    return taskRepository.findById(taskId);
   }
 
   @Override
   public void save(String username, NewTaskRequest newTaskRequest) {
-    int newTaskId = tasks.size() + 1;
     Task newTask = new Task(
-        newTaskId,
         username,
         newTaskRequest.getTitle(),
         newTaskRequest.getDescription(),
         LocalDate.parse(newTaskRequest.getTargetDate()),
         false);
-    tasks.add(newTask);
+    taskRepository.save(newTask);
   }
 
   @Override
   public void deleteById(int taskId) {
-    tasks.removeIf(task -> task.getId() == taskId);
+    taskRepository.deleteById(taskId);
   }
 
   @Override
-  public void updateById(int taskId, Task updatedTask) {
-    tasks.forEach(task -> {
-      if (task.getId() != taskId) {
-        return;
-      }
-      
-      task.setTitle(updatedTask.getTitle());
-      task.setDescription((updatedTask.getDescription()));
-      task.setTargetDate(updatedTask.getTargetDate());
-      task.setDone(updatedTask.isDone());
-    });
+  public Task updateById(int taskId, Task updatedTask) {
+    Optional<Task> taskOptional = taskRepository.findById(taskId);
+
+    if (!taskOptional.isPresent()) {
+      // Handle case where task with given ID is not found
+      throw new RuntimeException("Task not found with ID: " + taskId);
+    }
+
+    Task task = taskOptional.get();
+
+    task.setTitle(updatedTask.getTitle());
+    task.setDescription((updatedTask.getDescription()));
+    task.setTargetDate(updatedTask.getTargetDate());
+    task.setDone(updatedTask.isDone());
+
+    return taskRepository.save(task);
   }
 }

@@ -50,7 +50,7 @@ uri="http://www.springframework.org/tags/form" prefix="form" %>
         <div class="mb-3">
           <label for="task-target-date" class="form-label">Complete by</label>
           <form:input
-            type="date"
+            type="text"
             class="form-control"
             id="task-target-date"
             path="targetDate"
