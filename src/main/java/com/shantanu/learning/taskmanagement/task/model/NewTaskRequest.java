@@ -4,10 +4,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class NewTaskRequest {
-  @Size(min = 10, message = "Enter atleast 10 characters.")
+  @Size(min = 3, message = "Title must be minimum 3 characters.")
   private String title;
 
-  @Size(max = 100, message = "Maximum 100 characters are allowed.")
+  @Size(max = 100, message = "Description can be maximum 100 characters.")
   private String description;
 
   @NotBlank(message = "Target Date is required.")

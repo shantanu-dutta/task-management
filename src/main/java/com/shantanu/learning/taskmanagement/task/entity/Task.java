@@ -2,20 +2,40 @@ package com.shantanu.learning.taskmanagement.task.entity;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.validation.constraints.Size;
 
+@Entity
 public class Task {
+  @Id
+  @SequenceGenerator(name = "task_id_sequence_generator", sequenceName = "task_id_sequence", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "task_id_sequence_generator")
   private int id;
   private String username;
 
-  @Size(min=10, message = "Enter atleast 10 characters.")
+  @Size(min = 3, message = "Enter atleast 3 characters.")
   private String title;
-  
-  @Size(max=100, message = "Maximum 100 characters are allowed.")
+
+  @Size(max = 300, message = "Maximum 300 characters are allowed.")
   private String description;
 
   private LocalDate targetDate;
   private boolean done;
+
+  public Task() {
+  }
+
+  public Task(String username, String title, String description, LocalDate targetDate, boolean done) {
+    this.username = username;
+    this.title = title;
+    this.description = description;
+    this.targetDate = targetDate;
+    this.done = done;
+  }
 
   public Task(int id, String username, String title, String description, LocalDate targetDate, boolean done) {
     this.id = id;
